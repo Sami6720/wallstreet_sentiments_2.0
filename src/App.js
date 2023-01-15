@@ -23,7 +23,7 @@ function App() {
         <Grid item xs={12} lg={4}>
           <DataCard name={"This Month's Data"}></DataCard>
         </Grid>
-        <Grid item xs={12} lg={4}>
+        <Grid item xs={12} sm={12} md={12} lg={12}>
           <DataCard name={"Top voted comments"}></DataCard>
         </Grid>
       </Grid>
