@@ -25,3 +25,4 @@ yarn-error.log*
 # my_misc
 /data
 /env
+/misc
