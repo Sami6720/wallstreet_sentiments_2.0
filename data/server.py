@@ -97,8 +97,12 @@ reddit = praw.Reddit(
 @app.route('/live/', methods=['GET'])
 def get_item():
     # Your code to fetch the item from the database goes here
-    df = get_data(reddit=reddit, stocks=stocks, time=time)
-    return df
+    try:
+        df = get_data(reddit=reddit, stocks=stocks, time=time)
+        return df
+    except Exception as e:
+        return jsonify(message=str(e)), 400        
+
 
 if __name__ == '__main__':
     app.run( host='localhost', port=9874,debug=True)
