@@ -25,4 +25,4 @@ yarn-error.log*
 # my_misc
 /env
 /misc
-/data/.ipynb_checkpoints
+/data
