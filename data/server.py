@@ -94,7 +94,7 @@ reddit = praw.Reddit(
 )
 
 
-@app.route('/items/', methods=['GET'])
+@app.route('/live/', methods=['GET'])
 def get_item():
     # Your code to fetch the item from the database goes here
     df = get_data(reddit=reddit, stocks=stocks, time=time)
