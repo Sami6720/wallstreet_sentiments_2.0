@@ -4,8 +4,17 @@ import Grid from "@mui/material/Grid"; // Grid version 1
 import Navbar from "./components/Navbar";
 import { Toolbar } from "@mui/material";
 import DataCard from "./components/DataCard";
+import { useState } from "react";
 
 function App() {
+
+  // Code to update live data columns
+
+  const [liveDataCol, changeCol] = useState();
+
+
+
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} md={12} lg={12}>
@@ -14,7 +23,7 @@ function App() {
         {/* The empty toolbar component makes sure that  */}
       </Grid>
       <Grid item xs={12} sm={6} md={6} lg={6}>
-        <DataCard name={"In the last five mins"}></DataCard>
+        <DataCard name={"In the last five mins"} rows={liveDataCol}></DataCard>
       </Grid>
       <Grid item xs={12} sm={6} md={6} lg={6}>
         <DataCard name={"Yesterday's end of day"}></DataCard>
