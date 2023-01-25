@@ -7,21 +7,17 @@ import DataCard from "./components/DataCard";
 import { useState } from "react";
 
 function App() {
-
   // Code to update live data columns
 
-  const [df2, changedf2] = useState( // df2 refers to past df
-  [
-    { id: 1, Stocks: "sami", Total_compund: 35, Percentage_Change: 5 },
-    { id: 2, Stocks: "orthy", Total_compund: 35, Percentage_Change: 5 },
-  ]
+  const [df2, changef2] = useState(
+    // df2 refers to past df
+    [
+      { id: 1, stocks: "sami", total_compound_x: 35, change: 5 },
+      { id: 2, stocks: "orthy", total_compound_x: 35, change: 5 },
+    ]
   );
 
-
   // function to run every 10 mins and call on end point
-
-
-
 
   return (
     <Grid container spacing={2}>
@@ -34,11 +30,11 @@ function App() {
         <DataCard name={"In the last five mins"} rows={df2}></DataCard>
       </Grid>
       <Grid item xs={12} sm={6} md={6} lg={6}>
-        <DataCard name={"Yesterday's end of day"}></DataCard>
+        <DataCard name={"Yesterday's end of day"} rows={df2}></DataCard>
       </Grid>
 
       <Grid item xs={12} sm={12} md={12} lg={12}>
-        <DataCard name={"Top voted comments"}></DataCard>
+        <DataCard name={"Top voted comments"} rows={df2}></DataCard>
       </Grid>
     </Grid>
   );

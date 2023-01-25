@@ -14,6 +14,7 @@ function DataCard(props) {
       editable: false,
       align: "center",
       flex: 0.2,
+      headerAlign: "center",
     },
     {
       field: "total_compound_x",
@@ -22,25 +23,27 @@ function DataCard(props) {
       editable: false,
       soratble: true,
       align: "center",
-      flex: 0.4,
+      headerAlign: "center",
+      flex: 0.2,
     },
     {
-      field: "Percentage_Change",
-      headerName: "change",
+      field: "change",
+      headerName: "Percentage Change",
       type: "number",
       editable: false,
       soratble: true,
       align: "center",
-      flex: 0.4,
+      flex: 0.2,
+      headerAlign: "center",
     },
   ];
 
-  const rows = [
-    { id: 1, Stocks: "sami", Total_compund: 35, Percentage_Change: 5 },
-    { id: 2, Stocks: "orthy", Total_compund: 35, Percentage_Change: 5 },
-  ];
+  // const rows = [
+  //   { id: 1, stocks: "sami", total_compound_x: 35, change: 5 },
+  //   { id: 2, stocks: "orthy", total_compound_x: 35, change: 5 },
+  // ];
 
-  // const rows=props.rows;
+  const df2 = props.rows;
   const name = props.name;
   // const rows=props.rows;
   return (
@@ -50,7 +53,7 @@ function DataCard(props) {
           {name}
         </Typography>
         <DataGrid
-          rows={rows}
+          rows={df2}
           columns={columns}
           pageSize={5}
           rowsPerPageOptions={[5]}
