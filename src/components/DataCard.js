@@ -7,7 +7,7 @@ function DataCard(props) {
   const columns = [
     // { field: "id", headerName: "Rank", width: 10, editable: false },
     {
-      field: "Stocks",
+      field: "stocks",
       headerName: "Stock",
       type: "string",
       soratble: true,
@@ -16,7 +16,7 @@ function DataCard(props) {
       flex: 0.2,
     },
     {
-      field: "Total_Compound",
+      field: "total_compound_x",
       headerName: "Sentiment Score",
       type: "number",
       editable: false,
@@ -26,7 +26,7 @@ function DataCard(props) {
     },
     {
       field: "Percentage_Change",
-      headerName: "Change",
+      headerName: "change",
       type: "number",
       editable: false,
       soratble: true,
@@ -41,7 +41,8 @@ function DataCard(props) {
   ];
 
   // const rows=props.rows;
-  const { name } = props;
+  const name = props.name;
+  // const rows=props.rows;
   return (
     <Card>
       <CardContent sx={{ height: 400, width: "100%" }}>

@@ -10,7 +10,15 @@ function App() {
 
   // Code to update live data columns
 
-  const [liveDataCol, changeCol] = useState();
+  const [df2, changedf2] = useState( // df2 refers to past df
+  [
+    { id: 1, Stocks: "sami", Total_compund: 35, Percentage_Change: 5 },
+    { id: 2, Stocks: "orthy", Total_compund: 35, Percentage_Change: 5 },
+  ]
+  );
+
+
+  // function to run every 10 mins and call on end point
 
 
 
@@ -23,7 +31,7 @@ function App() {
         {/* The empty toolbar component makes sure that  */}
       </Grid>
       <Grid item xs={12} sm={6} md={6} lg={6}>
-        <DataCard name={"In the last five mins"} rows={liveDataCol}></DataCard>
+        <DataCard name={"In the last five mins"} rows={df2}></DataCard>
       </Grid>
       <Grid item xs={12} sm={6} md={6} lg={6}>
         <DataCard name={"Yesterday's end of day"}></DataCard>
