@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 
 # For get_data function
-from data_scripts import get_data
+from data_scripts import get_data, stringify_col
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -93,12 +93,15 @@ reddit = praw.Reddit(
     client_secret = "52XN7-d-s7tBO8Wld9mPQ19PMaV8HA"
 )
 
+# temporary df2
+df2=pd.read_csv('E:\walstreet_sentiments_two\walstreet_2.0\data_exploration\some_data.csv').drop(['Unnamed: 0.1', 'Unnamed: 0'], axis=1)
 
+# endpoints follow
 @app.route('/live/', methods=['GET'])
 def get_item():
     # Your code to fetch the item from the database goes here
     try:
-        df = get_data(reddit=reddit, stocks=stocks, time=time)
+        df=get_data(df2=df2, reddit=reddit, stocks=stocks, time=time)
         return df
     except Exception as e:
         return jsonify(message=str(e)), 400        

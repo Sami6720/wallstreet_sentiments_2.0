@@ -10,7 +10,13 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from datetime import date
 
 
-def get_data(reddit, stocks, time):
+def stringify_col(x):
+    if np.isnan(x):
+        return 'NEW'
+    else:
+        return str(x)
+
+def get_data(df2, reddit, stocks, time):
     
     # Includes common words and words used on wsb that are also stock names
     blacklist = {'I', 'ELON', 'WSB', 'THE', 'A', 'ROPE', 'YOLO', 'TOS', 'CEO', 'DD', 'IT', 'OPEN', 'ATH', 'PM', 'IRS', 'FOR','DEC', 'BE', 'IMO', 'ALL', 'RH', 'EV', 'TOS', 'CFO', 'CTO', 'DD', 'BTFD', 'WSB', 'OK', 'PDT', 'RH', 'KYS', 'FD', 'TYS', 'US', 'USA', 'IT', 'ATH', 'RIP', 'BMW', 'GDP', 'OTM', 'ATM', 'ITM', 'IMO', 'LOL', 'AM', 'BE', 'PR', 'PRAY', 'PT', 'FBI', 'SEC', 'GOD', 'NOT', 'POS', 'FOMO', 'TL;DR', 'EDIT', 'STILL', 'WTF', 'RAW', 'PM', 'LMAO', 'LMFAO', 'ROFL', 'EZ', 'RED', 'BEZOS', 'TICK', 'IS', 'PM', 'LPT', 'GOAT', 'FL', 'CA', 'IL', 'MACD', 'HQ', 'OP', 'PS', 'AH', 'TL', 'JAN', 'FEB', 'JUL', 'AUG', 'SEP', 'SEPT', 'OCT', 'NOV', 'FDA', 'IV', 'ER', 'IPO', 'MILF', 'BUT', 'SSN', 'FIFA', 'USD', 'CPU', 'AT', 'GG', 'Mar'}
@@ -173,11 +179,26 @@ def get_data(reddit, stocks, time):
     # Printing sentiment analysis
     print(f"\nSentiment analysis of top {picks_ayz} picks:")
     df = pd.DataFrame(scores)
-    df.index = ['Bearish', 'Neutral', 'Bullish', 'Total_Compound']
-    df = df.T
-    df['Stocks']=df.index
-    df.reset_index(inplace=True)
-    df.drop('index', axis=1, inplace=True)
-    df=df.reindex(columns=['Stocks', 'Bearish', 'Neutral', 'Bullish', 'Total_Compound'])
+    df=df.T
+    df['stocks']=df.index
+    df=df.reset_index().drop(['index'], axis=1)
+    df=df[['stocks','neg', 'neu', 'pos', 'compound']]
+    df.columns = ['stocks','bearish', 'neutral', 'bullish', 'total_compound'] 
+    df_merged=df.merge(df2, on='stocks', how='left') # Left join
+    df_merged[['total_compound_x', "total_compound_y"]] = df_merged[["total_compound_x", "total_compound_y"]].apply(pd.to_numeric) # Convert total_compound_x and total_compound_y to numeric
+    df_merged['change']=100*(df_merged['total_compound_x']-df_merged['total_compound_y'])/(df_merged['total_compound_y'])
+    df_merged=df_merged.sort_values(
+        by="total_compound_x",
+        ascending=False
+    ).reset_index().drop(['index'], axis=1) # percentage change column added
     print(df)
-    return df.to_json(orient="records")
+    df_merged=df_merged[['stocks', 'total_compound_x', 'change']]
+    df_merged.columns=['stocks', 'total_compound', 'change']
+    df_merged['change']=df_merged['change'].apply(lambda x: 0 if x==0 else x) # prevent -0.0 in change
+    df_merged['change']=df_merged['change'].apply(lambda x: round(x, 2)) # round change to 2 dp
+    df_merged['change']=df_merged['change'].apply(stringify_col) # stringify change
+    df_merged['total_compound']=df_merged['total_compound'].apply(lambda x: round(x, 2)) # round total_compound to 2 dp
+    df_merged['total_compound']=df_merged['total_compound'].apply(stringify_col) # stringify total_compound
+    df_merged['id']=df_merged.index # add id column
+
+    return df_merged.to_json(orient='records')
