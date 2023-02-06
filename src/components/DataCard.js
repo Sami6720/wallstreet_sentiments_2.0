@@ -17,7 +17,7 @@ function DataCard(props) {
       headerAlign: "center",
     },
     {
-      field: "total_compound_x",
+      field: "total_compound",
       headerName: "Sentiment Score",
       type: "number",
       editable: false,
