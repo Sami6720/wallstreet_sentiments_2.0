@@ -198,7 +198,7 @@ def get_data(df2, reddit, stocks, time):
     df_merged['change']=df_merged['change'].apply(lambda x: round(x, 2)) # round change to 2 dp
     df_merged['change']=df_merged['change'].apply(stringify_col) # stringify change
     df_merged['total_compound']=df_merged['total_compound'].apply(lambda x: round(x, 2)) # round total_compound to 2 dp
-    df_merged['total_compound']=df_merged['total_compound'].apply(stringify_col) # stringify total_compound
+    # df_merged['total_compound']=df_merged['total_compound'].apply(stringify_col) # stringify total_compound
     df_merged['id']=df_merged.index # add id column
 
     return df_merged.to_json(orient='records')

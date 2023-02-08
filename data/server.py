@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 
 # For get_data function
 from data_scripts import get_data, stringify_col
@@ -14,7 +15,7 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from datetime import date
 
 app = Flask(__name__)
-
+CORS(app)
 
 '''includes US stock symbols with market cap > 100 Million, and price above $3. 
 Download the csv file:

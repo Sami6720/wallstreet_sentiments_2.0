@@ -23,7 +23,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # my_misc
-/data
 /env
 /misc
 /data_exploration
+data/__pycache__/
